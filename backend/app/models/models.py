@@ -2,8 +2,37 @@ from sqlalchemy.orm import declarative_base
 from sqlalchemy import Column, Integer, String, Date, DateTime, Text, Enum, ForeignKey
 from sqlalchemy.orm import relationship
 import enum, datetime
+import datetime
 
 Base = declarative_base()
+
+
+# --- new enum + table ---
+class ServiceStage(str, enum.Enum):
+    not_started = "not_started"
+    in_progress = "in_progress"
+    validated = "validated"
+
+class ServiceTask(Base):
+    __tablename__ = "service_tasks"
+    id = Column(Integer, primary_key=True)
+    project_id = Column(Integer, ForeignKey("projects.id"))
+    tester_id = Column(Integer, ForeignKey("users.id"))
+    title = Column(String, nullable=False)
+    description = Column(Text, default="")
+    severity = Column(String, default="Medium")      # Low | Medium | High | Critical
+    stage = Column(Enum(ServiceStage), default=ServiceStage.not_started, nullable=False)
+    due_date = Column(Date)
+    order_index = Column(Integer, default=0)         # for drag/drop ordering
+
+class Client(Base):
+    __tablename__ = "clients"
+    id = Column(Integer, primary_key=True)
+    name = Column(String, unique=True, index=True, nullable=False)
+    contact_name = Column(String, default="")
+    contact_email = Column(String, default="")
+    contact_phone = Column(String, default="")
+    notes = Column(Text, default="")
 
 class Role(str, enum.Enum):
     tester = "tester"

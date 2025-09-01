@@ -1,28 +1,26 @@
-# Node
-node_modules/
-.next/
-dist/
-out/
-
 # Python
 __pycache__/
-*.pyc
-*.pyo
-*.pyd
+*.py[cod]
+*.log
+
+# Virtual envs
 .venv/
 venv/
+env/
 
-# Env files
+# Local data / generated artifacts
+uploads/
+**/*.pdf
+**/*.xlsx
+
+# Environment / secrets
 .env
-.env.*
-!.env.example
+*.env
 
-# OS/editor
-.DS_Store
-Thumbs.db
+# Editors / OS
 .vscode/
 .idea/
+.DS_Store
 
-# Logs
-*.log
-logs/
+backend/uploads/
+backend/download/
